@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $("div.shipping").show();
+        $("div.billing").hide();
+        $("#shipping").click(function(e) {
+          let email = $("#email").val();
+          console.log(email);
+          if (!email.length) {
+            $("div.emailerror").show();
+            e.stopPropagation();
+            return false;
+          }
+          $("div.billing").show();
+          $("div.shipping").hide();
+          console.log(window.location);
+          var url = window.location.href;
+          console.log(url);
+          var url_parts = url.replace(/\/\s*$/, "").split("/");
+          url_parts.shift();
+          console.log(url_parts);
+          return false;
+        });
+      });
+    </script>
+    <title>Checkout</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div
+          class="col-sm-6"
+          style="border: 1pt solid grey; margin-right: 10px"
+        >
+          <div
+            class="row"
+            style="border-bottom: 3pt solid #862264; padding-top: 10px"
+          >
+            <div class="col-sm">
+              <div class="row">
+                <div class="col-sm-2">
+                  <h2>1</h2>
+                </div>
+                <div class="col-sm">
+                  <h2 style="color: #862264">Shipping</h2>
+                  <p style="font-weight: lighter">Where should we Ship?</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="row">
+                <div class="col-sm-2">
+                  <h2>2</h2>
+                </div>
+                <div class="col-sm">
+                  <h2 style="color: #862264">Billing</h2>
+                  <p style="font-weight: lighter">How do you want to pay?</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="shipping">
+            <p style="font-weight: bold; margin-top: 10px">
+              Please enter your shipping information:
+            </p>
+            <form action="/shipping/" method="GET" id="shippingform">
+              <div class="form-group">
+                <label for="firstname">First Name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="firstname"
+                  name="firstname"
+                />
+              </div>
+              <div class="form-group">
+                <label for="lastname">Last Name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lastname"
+                  name="lastname"
+                />
+              </div>
+              <div class="emailerror" style="display: none">
+                <p style="color: red">Please enter an email address.</p>
+              </div>
+              <div class="form-group">
+                <label for="email">Email address:</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                />
+              </div>
+              <button
+                type="submit"
+                id="shipping"
+                class="btn btn-info btn-lg btn-block"
+              >
+                Next: Billing Information
+              </button>
+            </form>
+          </div>
+          <div class="billing">
+            <p style="font-weight: bold; margin-top: 15px;">
+              Billing Information
+            </p>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="optradio"
+                />Same as Shipping Information
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="optradio"
+                />Use a different Billing Address
+              </label>
+            </div>
+            <hr />
+            <form>
+              <div class="form-row" style="text-align: center">
+                <div class="form-group col-sm-6">
+                  <label for="inputcardtype"
+                    ><img
+                      src="cardlogos.png"
+                      alt="credit card logos"
+                      style="height: 25px;"
+                  /></label>
+                  <select class="form-control" id="inputcardtype">
+                    <option selected>Please Select Card Type</option>
+                    <option>Visa</option>
+                    <option>MasterCard</option>
+                    <option>American Express</option>
+                    <option>Discover</option>
+                  </select>
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="inputcardnum" style="font-size: small"
+                    >*Credit Card Number
+                    <img src="lock.png" alt="lock image" style="height: 25px;"
+                  /></label>
+                  <input type="text" class="form-control" id="inputcardnum" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-sm-4">
+                  <label for="inputcvv"></label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputCity"
+                    placeholder="CVV"
+                  />
+                </div>
+                <div class="form-group col-sm-4">
+                  <label for="inputmonth">*Month</label>
+                  <input type="text" id="inputmonth" class="form-control" />
+                </div>
+                <div class="form-group col-sm-4">
+                  <label for="inputyear">*Year</label>
+                  <input type="text" class="form-control" id="inputyear" />
+                </div>
+              </div>
+            </form>
+            <hr />
+            <table class="table table-borderless">
+              <tbody>
+                <tr>
+                  <td style="font-weight: bold;">Shipping</td>
+                  <td>
+                    <div class="form-check" style="text-align: end">
+                      <label class="form-check-label">
+                        <input
+                          type="radio"
+                          class="form-check-input"
+                          name="optradio"
+                        />Standard: $6.97
+                      </label>
+                    </div>
+                    <div class="form-check" style="text-align: end">
+                      <label class="form-check-label">
+                        <input
+                          type="radio"
+                          class="form-check-input"
+                          name="optradio"
+                        />Rush: $9.97
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div
+              style="border: 1pt dotted #ef3432; background-color: #fffbc8; padding: 10px"
+            >
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="agreementcheck"
+                />
+                <label
+                  class="form-check-label"
+                  for="agreementcheck"
+                  style="font-weight: bold; color: #ef3432"
+                  ><---- Click this box to agree!</label
+                >
+              </div>
+              <p style="margin: 20px">
+                I agree to the terms and conditions below. I also understand
+                that I will be billed each month for $49.00 (plus $6.97 S&H) and
+                a fresh supply of Nerve Renew will be mailed to me.
+              </p>
+            </div>
+            <hr />
+            <table class="table table-borderless">
+              <tbody>
+                <tr>
+                  <td style="font-weight: bold;">Today's Total</td>
+                  <td style="font-weight: bold; text-align: end">$6.97</td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="button" class="btn btn-info btn-lg btn-block">
+              Place my order
+            </button>
+            <hr />
+            <div class="row" style="text-align: center">
+              <div class="col-sm"><img src="badge1.png" /></div>
+              <div class="col-sm"><img src="badge2.png" /></div>
+              <div class="col-sm"><img src="badge3.png" /></div>
+              <div class="col-sm"><img src="badge4.png" /></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="row" style="height:150px">
+            <div class="col-sm-2">
+              <img src="product_image.png" alt="nerve renew bottle image" />
+            </div>
+            <div class="col-sm-10">
+              <h4
+                style="text-align: end; line-height: 150px; font-weight: normal;"
+              >
+                Best Value: Free 2 week trial
+              </h4>
+            </div>
+          </div>
+          <table class="table table-borderless">
+            <thead>
+              <tr style="border-bottom: 1pt solid grey">
+                <th></th>
+                <th style="text-align: end">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: bold;">
+                  Best Value: Free 2 week trial ( $49.99 value )
+                </td>
+                <td style="text-align: end">$0.00</td>
+              </tr>
+              <tr>
+                <td style="font-weight: bold;">Tax</td>
+                <td style="text-align: end">$0.00</td>
+              </tr>
+              <tr>
+                <td style="font-weight: bold;">Shipping</td>
+                <td>
+                  <div class="form-check" style="text-align: end">
+                    <label class="form-check-label">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="optradio"
+                      />Standard: $6.97
+                    </label>
+                  </div>
+                  <div class="form-check" style="text-align: end">
+                    <label class="form-check-label">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        name="optradio"
+                      />Rush: $9.97
+                    </label>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                style="border-bottom: 1pt solid grey; border-top: 1pt solid grey;"
+              >
+                <td style="font-weight: bold;">Total</td>
+                <td style="text-align: end; font-weight: bold;">$6.97</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row" style="justify-content: center;">
+            <h4 style="line-height: 75px; font-weight: normal;">
+              Satisfaction 100% Guaranteed
+            </h4>
+          </div>
+          <table class="table table-borderless">
+            <tbody>
+              <tr>
+                <td>
+                  <img src="checkmark.png" alt="checkmark image" />
+                </td>
+                <td>In Stock: Ships within 24 hours</td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="checkmark.png" alt="checkmark image" />
+                </td>
+                <td>Cancel your trial anytime, no questions asked</td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="checkmark.png" alt="checkmark image" />
+                </td>
+                <td>
+                  100% Money Back Guarantee covers your most recent order for 1
+                  full year.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div
+            class="row"
+            style="border-top: 1pt solid grey; padding-top: 20px; padding-bottom: 20px;"
+          >
+            <div class="col-sm-4">
+              <img src="risk_badge.png" alt="satisfaction guaranteed image" />
+            </div>
+            <div class="col-sm">
+              <h4 style="font-weight: normal; text-align: center;">
+                100% No Risk Guarantee!
+              </h4>
+              <p>
+                Remember, You are never at risk! Your fully protected by our
+                money back guarantee on your most recent order.
+              </p>
+            </div>
+          </div>
+          <div
+            class="row"
+            style="border-top: 1pt solid grey; border-bottom: 1pt solid grey; padding-top: 20px; padding-bottom: 20px;"
+          >
+            <div class="col-sm-4">
+              <img src="safe_badge.png" alt="secure transaction image" />
+            </div>
+            <div class="col-sm">
+              <h4 style="font-weight: normal; text-align: center;">
+                100% Safe Transaction
+              </h4>
+              <p>
+                Your transaction is completely safe and secure via our 1024 Bit
+                Secure Server
+              </p>
+              <p>International orders can take 2-4 weeks to arrive.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
